@@ -7,7 +7,7 @@ st.title("Income Info")
 # Sidebar Inputs
 st.sidebar.subheader("Inputs")
 
-initial_income = st.sidebar.number_input("Enter Yearly Gross Pay:", min_value=0.0, value=0.0, format="%.2f")
+initial_income = st.sidebar.number_input("Enter Yearly Gross Pay (£):", min_value=0.0, value=30000.0, format="%.2f")
 pension_rate = st.sidebar.number_input("Enter your pension rate (%):", min_value=0.0, max_value=100.0, value=0.0, format="%.2f")
 
 has_student_loan = st.sidebar.checkbox("Repay Student Loan")
@@ -23,21 +23,15 @@ else:
 pension_deduction = initial_income * (pension_rate / 100)
 gross_income = initial_income - pension_deduction
 
-if initial_income > 0:
-    basic_tax, higher_tax, additional_tax = calculate_income_tax(gross_income)
-    income_tax = basic_tax + higher_tax + additional_tax
+basic_tax, higher_tax, additional_tax = calculate_income_tax(gross_income)
+income_tax = basic_tax + higher_tax + additional_tax
 
-    pt_nic, uel_nic = calculate_nic(initial_income)  # Unlike income tax, NIC tax does not benefit from pension deduction
-    nic = pt_nic + uel_nic
+pt_nic, uel_nic = calculate_nic(initial_income)  # Unlike income tax, NIC tax does not benefit from pension deduction
+nic = pt_nic + uel_nic
 
-    sl_payment = calculate_student_loan(gross_income, student_loan_rate / 100, student_loan_threshold) if has_student_loan else 0.0
+sl_payment = calculate_student_loan(gross_income, student_loan_rate / 100, student_loan_threshold) if has_student_loan else 0.0
 
-    net_income = gross_income - income_tax - nic - sl_payment
-else:
-    income_tax = 0.0
-    nic = 0.0
-    sl_payment = 0.0
-    net_income = 0.0
+net_income = gross_income - income_tax - nic - sl_payment
 
 # Sidebar Outputs
 st.sidebar.subheader("Results")
@@ -58,6 +52,6 @@ fig.update_traces(
     marker=dict(colors=["#6fb6ec", "#f76565", "#f9f1a5", "#f3c623", "#65f779"]),
     domain=dict(x=[0.0, 1.0], y=[0.0, 1.0])
 )
-fig.update_layout(margin=dict(t=80, b=80, l=80, r=80), height=650)
+fig.update_layout(margin=dict(t=100, b=100, l=100, r=100), height=650)
 
 st.plotly_chart(fig, use_container_width=True)
