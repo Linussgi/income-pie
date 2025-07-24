@@ -1,1 +1,2 @@
 # income-pie
+Basic dashboard app to calculate and visualise income proportion distribution towards tax, NIC, loan repayment and pension. App hosted on Streamlit [here](https://annual-income.streamlit.app/). This app was made with data available as of July 2025.
