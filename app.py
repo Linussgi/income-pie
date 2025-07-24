@@ -27,7 +27,7 @@ if initial_income > 0:
     basic_tax, higher_tax, additional_tax = calculate_income_tax(gross_income)
     income_tax = basic_tax + higher_tax + additional_tax
 
-    pt_nic, uel_nic = calculate_nic(gross_income)
+    pt_nic, uel_nic = calculate_nic(initial_income)  # Unlike income tax, NIC tax does not benefit from pension deduction
     nic = pt_nic + uel_nic
 
     sl_payment = calculate_student_loan(gross_income, student_loan_rate / 100, student_loan_threshold) if has_student_loan else 0.0
